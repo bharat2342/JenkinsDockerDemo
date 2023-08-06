@@ -1,20 +1,48 @@
-pipeline {
-    agent none
-    stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'maven:3.8.7'
-                    // You can also specify other Docker configurations if needed
-                    // e.g., args '-u root:root'
-                    //      registryUrl 'https://your-registry.example.com'
-                    //      registryCredentialsId 'your-registry-credentials-id'
-                }
-            }
-            steps {
-                // Your build steps here
-                // e.g., sh 'npm install' or 'mvn clean install'
-            }
-        }
-    }
+pipeline 
+{ 
+	agent { docker { image 'maven:3.8.7' }}
+	stages
+	{
+		stage('Build')
+		{
+			steps     
+		{
+		sh 'mvn --version'	
+		echo "Build"
+	    } 
+		}
+
+		stage('Test')
+		{
+			steps     
+		{
+		echo "Test"
+	    } 
+		}
+
+		stage('Integration Test')
+		{
+			steps     
+		{
+		echo "Integration Test"
+	    } 
+		}
+
+	}
+
+	post{
+		always{
+			echo 'I am awesome. I run always'
+		}
+		success{
+			echo 'I run only when it is sucessful'
+		}
+		failure{
+			echo 'I run only when it is failure'
+		}
+
+	}
+	//changed
+
+
 }
